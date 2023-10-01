@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(2, 2, 39); 
+}
+.a{
+    margin-top: 15px;
+    cursor: pointer;
+}
+.a:hover{
+    color:green;
+}
+
+.container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    color: aliceblue;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    margin: 130px auto 0 auto;  
+    animation: slide-in 1s ease-in-out; 
+}
+
+@keyframes slide-in {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
