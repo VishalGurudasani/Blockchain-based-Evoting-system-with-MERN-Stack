@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import "../CSS/Home.css"
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,15 +13,17 @@ const Home = () => {
   const isLoggedIn = localStorage.getItem('token');
 
   return (
-    <div className='container my-3'>
+    <div >
+      <div className="home">
       {isLoggedIn ? (
         <>
-          <button className='btn btn-primary mx-3' onClick={handleClick}>isAdmin</button>
-          <button className='btn btn-primary' onClick={()=>{navigate('/voting')}}>Voter</button>
+          <button className='ob' onClick={handleClick}>isAdmin</button>
+          <button className='ob' onClick={()=>{navigate('/voting')}}>Voter</button>
         </>
       ) : (
         <p>You need to be logged in to access this page.</p>
       )}
+      </div>
     </div>
   );
 }

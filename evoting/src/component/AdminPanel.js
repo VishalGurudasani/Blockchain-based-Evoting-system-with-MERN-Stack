@@ -121,7 +121,8 @@ const AdminPanel = ({ state }) => {
   };
 
   return (
-    <div className="Admin">
+    
+    <div className="admin">
       <h1 className="text-center">Admin Panel</h1>
       <br />
       <div>
@@ -149,7 +150,7 @@ const AdminPanel = ({ state }) => {
       </div>
       <hr />
       <div>
-        <h2>Add Candidate</h2>
+        <h2 className="text-center">Add Candidate</h2>
         <button className="ob" onClick={addCandidate}>Add Candidate</button>
         <input type="text" placeholder="city" id="city" />
         <input type="text" placeholder="Candidate Name" id="name" />
@@ -333,6 +334,7 @@ const AdminPanel = ({ state }) => {
           </div>
         </div>
     </div>
+    
   );
 };
 

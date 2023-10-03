@@ -42,7 +42,7 @@ const AdminL = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className='container'>
+      <div className='container1'>
         <div>
           <label htmlFor="email" className="form-label">
             Email address
