@@ -210,7 +210,7 @@ const AdminPanel = ({ state }) => {
       <div >
         <button
           type="button"
-          className="btn btn-primary"
+          className="ob"
           data-bs-toggle="modal"
           data-bs-target="#CandidateDetailModal"
           onClick={getCandidateDetails}
@@ -273,7 +273,7 @@ const AdminPanel = ({ state }) => {
       </div>
       <hr />
       <div>
-        <button onClick={closeballot}>Close Ballot</button>
+        <button className="ob" onClick={closeballot}>Close Ballot</button>
         <input
           type="text"
           placeholder="city"
@@ -285,7 +285,7 @@ const AdminPanel = ({ state }) => {
       <div>
         <button 
         type="button"
-        className="btn btn-primary"
+        className="ob"
         data-bs-toggle="modal"
         data-bs-target="#ResultModal"
         onClick={getResult}>Result</button>
