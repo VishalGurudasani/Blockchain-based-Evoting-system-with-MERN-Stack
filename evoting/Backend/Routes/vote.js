@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../Models/user");
 
-// Define the route to retrieve the voter's ID based on the voterid
 
+// route to fetch the voter id and check it
 router.get("/getVoterId/:voterid", async (req, res) => {
   const { voterid } = req.params;
 
@@ -14,7 +14,7 @@ router.get("/getVoterId/:voterid", async (req, res) => {
       return res.status(404).json({ message: "Voter not found" });
     }
 
-    // Respond with the voter ID
+   
     res.json({ voterId: voter.voterid });
   } catch (error) {
     console.error(error);

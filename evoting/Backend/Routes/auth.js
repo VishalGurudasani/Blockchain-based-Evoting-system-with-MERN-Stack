@@ -9,8 +9,6 @@ var fetchuser = require("../Middleware/fetchuser");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 
-// const Config = require("../config");
-
 const JWT_SECRET = "evoting#";
 
 // ROUTE 1: Create a User using: POST "/api/auth/createuser". No login required
@@ -28,7 +26,7 @@ router.post(
   async (req, res) => {
     console.log("Request Body:", req.body);
     let success = false;
-    // If there are errors, return Bad request and the errors
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ success, errors: errors.array() });
@@ -55,11 +53,9 @@ router.post(
         adharno: req.body.adharno,
       });
 
-      // Generate a verification link using user's ID
       const verificationLink = `http://localhost:5000/api/auth/verify/?id=${user._id.toString()}`;
       const emailContent = `Click <a href="${verificationLink}">here</a> to verify your email.`;
 
-      // Send verification email with the link
       const mailOptions = {
         from: "flavio.hegmann@ethereal.email",
         to: user.email,
@@ -83,8 +79,6 @@ router.post(
       console.log(data);
       const authtoken = jwt.sign(data, JWT_SECRET);
 
-      //res.json(user)
-
       success = true;
       res.json({ success, authtoken });
     } catch (error) {
@@ -96,15 +90,13 @@ router.post(
 
 //verifying email
 router.get("/verify", async (req, res) => {
-  let userId = req.query.id; // Get the user's ID from the URL parameter
+  let userId = req.query.id;
   console.log(userId);
   if (!ObjectId.isValid(userId)) {
     return res.status(400).json({ success: false, error: "Invalid user ID" });
   }
 
   try {
-    // Find the user by their ID and update their email verification status
-
     const user = await User.findById(userId);
     console.log("User:", user);
     if (!user) {
@@ -136,7 +128,6 @@ router.post(
   ],
   async (req, res) => {
     let success = false;
-    // If there are errors, return Bad request and the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -193,7 +184,7 @@ router.post(
     const { email } = req.body;
     try {
       let user = await User.findOne({ email });
-      if ( user.isAdmin !== true) {
+      if (user.isAdmin !== true) {
         success = false;
         return res.status(400).json({ error: "you are not an admin" });
       }

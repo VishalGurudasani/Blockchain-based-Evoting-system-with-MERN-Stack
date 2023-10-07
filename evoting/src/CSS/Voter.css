@@ -54,4 +54,5 @@ button {
   .inputfield{
    margin: 10px;
   }
-  
+  /* How do I link an image to another page in react JS?
+To use an image as a link in React, wrap the image in an <a> tag or a Link tag if using React Router. The image will get rendered instead of the link and clicking on the image will cause the browser to navigate to the specified page. */

@@ -8,8 +8,6 @@ const Home = () => {
   const handleClick = () => {
     navigate('/admin');
   }
-
-  // Check if the user is logged in based on the 'token' in localStorage
   const isLoggedIn = localStorage.getItem('token');
 
   return (
