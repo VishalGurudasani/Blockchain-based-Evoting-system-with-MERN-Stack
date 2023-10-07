@@ -13,20 +13,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const responseOTP = await fetch("http://localhost:5000/api/otp/send-otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: credentials.email, purpose: "login" }),
-    });
-    const jsonOTP = await responseOTP.json();
-    if (jsonOTP.success) {
-      alert("OTP sent successfully");
-    } else {
-      alert("Error sending OTP");
-      return; // Don't proceed with login if OTP sending failed
-    }
+    
 
     const response = await fetch("http://localhost:5000/api/auth/login", {
       method: "POST",
@@ -43,11 +30,25 @@ const Login = () => {
     const json = await response.json();
     console.log(json);
     if (json.success) {
-      //save the authtoken and redirect
       localStorage.setItem("token", json.authtoken);
       navigate("/verify-otp");
     } else {
       alert("invalid credentials", "danger");
+    }
+
+
+    const responseOTP = await fetch("http://localhost:5000/api/otp/send-otp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: credentials.email, purpose: "login" }),
+    });
+    const jsonOTP = await responseOTP.json();
+    if (jsonOTP.success) {
+      alert("OTP sent successfully");
+    } else {
+      alert("Error sending OTP");
     }
   };
 

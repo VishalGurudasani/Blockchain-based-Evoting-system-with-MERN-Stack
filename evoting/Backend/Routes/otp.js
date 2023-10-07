@@ -8,7 +8,7 @@ const User = require("../Models/user");
 
 router.post("/send-otp", async (req, res) => {
   const email = req.body.email;
-  const purpose = req.body.purpose; // "login" or "reset-password"
+  const purpose = req.body.purpose; 
   const user = await User.findOne({ email });
 
   if (!user) {

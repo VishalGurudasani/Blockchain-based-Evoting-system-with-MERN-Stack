@@ -69,7 +69,7 @@ function VotingPanel({ state }) {
   return (
     <div className="voter">
       
-      {showInput && (<button className="ob" onClick={fetchCandidates} >Fetch Candidates</button>)}
+      {showInput && (<button className="ob visibility"  onClick={fetchCandidates}   >Fetch Candidates</button>)}
       {showInput && (<input
         className="inputfield"
         type="text"

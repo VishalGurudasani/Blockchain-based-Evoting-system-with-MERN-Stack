@@ -193,7 +193,7 @@ router.post(
     const { email } = req.body;
     try {
       let user = await User.findOne({ email });
-      if (!user && user.isAdmin !== true) {
+      if ( user.isAdmin !== true) {
         success = false;
         return res.status(400).json({ error: "you are not an admin" });
       }

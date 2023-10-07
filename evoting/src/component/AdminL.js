@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState }  from 'react'
 import { useNavigate } from 'react-router-dom'
 import "../CSS/admin.css"
 const AdminL = () => {
   let navigate = useNavigate();
-  const [credentials, setCredentials] = useState({
-    email: "",
-  });
-
+  
+const [email,setEmail] = useState('');
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -15,9 +13,7 @@ const AdminL = () => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        email: credentials.email, 
-      }),
+      body: JSON.stringify({ email }),
     });
     
     const json = await response.json();
@@ -32,13 +28,7 @@ const AdminL = () => {
     }
   }
 
-  const onChange = (e) => {
-    
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value
-    });
-  };
+  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -50,11 +40,11 @@ const AdminL = () => {
           <input
             type="email"
             className="form-control"
-            value={credentials.email}
             id="email"
             aria-describedby="emailHelp"
             name="email"
-            onChange={onChange}
+            onChange={(e)=>setEmail(e.target.value)}
+            
           />
           <button type="submit" className="ob">Submit</button>
         </div>

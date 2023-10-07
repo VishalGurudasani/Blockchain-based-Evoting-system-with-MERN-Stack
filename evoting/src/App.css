@@ -39,23 +39,29 @@
 
 .vertical-lines {
   border-collapse: collapse;
+  border: 1px solid yellow;
+  background-color: aqua;
 }
 
 .vertical-lines td {
-  border-right: 1px solid #cdc8c8;
-  border-left: 1px solid #cdc8c8;
+  border-right: 1px solid yellow;
+  border-left: 1px solid yellow;
   padding: 5px 10px; 
+  background-color: rgb(199, 141, 223);
 }
 
 .vertical-lines tr:first-child td {
-  border-top: 1px solid #cdc8c8;
+  border-top: 1px solid yellow;
 }
 
 .vertical-lines tr:last-child td {
-  border-bottom: 1px solid #cdc8c8; 
+  border-bottom: 1px solid yellow; 
 }
 
-/* CSS for VotingPanel */
+.modal-content{
+background-color: aquamarine;
+}
+
 
 
 
