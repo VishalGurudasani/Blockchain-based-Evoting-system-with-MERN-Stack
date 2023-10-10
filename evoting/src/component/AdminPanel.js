@@ -121,93 +121,93 @@ const AdminPanel = ({ state }) => {
   };
 
   return (
-    
     <div className="admin">
       <h1 className="text-center">Admin Panel</h1>
       <br />
       <div>
-      <button className="ob" onClick={createBallot}>Create Ballot</button>
-      <input type="text" placeholder="City" id="city" />
+        <button className="ob" onClick={createBallot}>
+          Create Ballot
+        </button>
+        <input type="text" placeholder="City" id="city" />
       </div>
       <div>
-      <button
-        type="button"
-        className="ob"
-        data-bs-toggle="modal"
-        data-bs-target="#BallotDetailModal"
-        onClick={ballotDetails}
-      >
-        Ballot Details
-      </button>
-      <input
-        type="text"
-        placeholder="enter city to check the ballot"
-        value={ballotCity}
-        onChange={(event) => {
-          setBallotCity(event.target.value);
-        }}
-      />
+        <button
+          type="button"
+          className="ob"
+          data-bs-toggle="modal"
+          data-bs-target="#BallotDetailModal"
+          onClick={ballotDetails}
+        >
+          Ballot Details
+        </button>
+        <input
+          type="text"
+          placeholder="enter city to check the ballot"
+          value={ballotCity}
+          onChange={(event) => {
+            setBallotCity(event.target.value);
+          }}
+        />
       </div>
       <hr />
       <div>
         <h2 className="text-center">Add Candidate</h2>
-        <button className="ob" onClick={addCandidate}>Add Candidate</button>
+        <button className="ob" onClick={addCandidate}>
+          Add Candidate
+        </button>
         <input type="text" placeholder="city" id="city" />
         <input type="text" placeholder="Candidate Name" id="name" />
         <input type="text" placeholder="Candidate Party" id="party" />
         <hr />
       </div>
-      
 
-      
-        <div
-          className="modal fade "
-          id="BallotDetailModal"
-          tabIndex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-lg">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">
-                  Ballot Details
-                </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                <table className="table vertical-lines">
-                  <tbody>
-                    <tr>
-                      <td>City</td>
-                      <td>{bDetails.city}</td>
-                    </tr>
-                    <tr>
-                      <td>Admin</td>
-                      <td>{bDetails.admin}</td>
-                    </tr>
-                    <tr>
-                      <td>Is Open</td>
-                      <td>{bDetails.isOpen}</td>
-                    </tr>
-                    <tr>
-                      <td>Candidates</td>
-                      <td>{bDetails.candidateCount}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+      <div
+        className="modal fade "
+        id="BallotDetailModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Ballot Details
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <table className="table vertical-lines">
+                <tbody>
+                  <tr>
+                    <td>City</td>
+                    <td>{bDetails.city}</td>
+                  </tr>
+                  <tr>
+                    <td>Admin</td>
+                    <td>{bDetails.admin}</td>
+                  </tr>
+                  <tr>
+                    <td>Is Open</td>
+                    <td>{bDetails.isOpen}</td>
+                  </tr>
+                  <tr>
+                    <td>Candidates</td>
+                    <td>{bDetails.candidateCount}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-      
+      </div>
 
-      <div >
+      <div>
         <button
           type="button"
           className="ob"
@@ -273,7 +273,9 @@ const AdminPanel = ({ state }) => {
       </div>
       <hr />
       <div>
-        <button className="ob" onClick={closeballot}>Close Ballot</button>
+        <button className="ob" onClick={closeballot}>
+          Close Ballot
+        </button>
         <input
           type="text"
           placeholder="city"
@@ -283,12 +285,15 @@ const AdminPanel = ({ state }) => {
       </div>
       <hr />
       <div>
-        <button 
-        type="button"
-        className="ob"
-        data-bs-toggle="modal"
-        data-bs-target="#ResultModal"
-        onClick={getResult}>Result</button>
+        <button
+          type="button"
+          className="ob"
+          data-bs-toggle="modal"
+          data-bs-target="#ResultModal"
+          onClick={getResult}
+        >
+          Result
+        </button>
         <input
           type="text"
           placeholder="city result"
@@ -297,44 +302,43 @@ const AdminPanel = ({ state }) => {
         />
       </div>
       <div
-          className="modal fade"
-          id="ResultModal"
-          tabIndex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">
-                  Result
-                </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                <table className="table vertical-lines">
-                  <tbody>
-                    <tr>
-                      <td>Name</td>
-                      <td>{result.winnerName}</td>
-                    </tr>
-                    <tr>
-                      <td>Party</td>
-                      <td>{result.winnerParty}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+        className="modal fade"
+        id="ResultModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Result
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <table className="table vertical-lines">
+                <tbody>
+                  <tr>
+                    <td>Name</td>
+                    <td>{result.winnerName}</td>
+                  </tr>
+                  <tr>
+                    <td>Party</td>
+                    <td>{result.winnerParty}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
+      </div>
     </div>
-    
   );
 };
 

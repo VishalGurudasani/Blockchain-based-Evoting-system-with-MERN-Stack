@@ -126,7 +126,7 @@ const ForgotPassword = () => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="ob">
             Send OTP
           </button>
         </form>
