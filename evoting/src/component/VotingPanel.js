@@ -16,7 +16,7 @@ function VotingPanel({ state }) {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [showInput, setShowInput] = useState(true);
   const [submitVote, setSubmitVote] = useState(false);
-  const time = 60;
+  const time = 120;
   const [timeInterval, setTimeInterval] = useState(time);
   const [expire, setExpire] = useState(false);
 
@@ -65,6 +65,7 @@ function VotingPanel({ state }) {
         const City = city;
         const Index = selectedCandidate;
         const Transaction = await contract.vote(voterId, City, Index);
+        
         await Transaction.wait();
         alert("Your vote has been submitted");
       } else {
@@ -91,7 +92,7 @@ function VotingPanel({ state }) {
   useEffect(() => {
     if (timeInterval === 0) {
       setExpire(true);
-      localStorage.setItem("votingTimeExpired", "true");
+      
       navigate("/");
     }
   }, [timeInterval]);
@@ -105,12 +106,11 @@ function VotingPanel({ state }) {
       .toString()
       .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
   }
-  const votingTimeExpired =
-    localStorage.getItem("votingTimeExpired") === "true";
+  
 
   return (
     <div>
-      {votingTimeExpired ? (
+      {expire ? (
         <div>
           <h2>Voting time has expired</h2>
         </div>
@@ -120,12 +120,12 @@ function VotingPanel({ state }) {
             <h2> Duration: {formatTime(timeInterval)} </h2>
           </div>
           <div className="voter">
-            {!votingTimeExpired && showInput && (
+            {showInput && (
               <button className="ob visibility" onClick={fetchCandidates}>
                 Fetch Candidates
               </button>
             )}
-            {!votingTimeExpired && showInput && (
+            {showInput && (
               <input
                 className="inputfield"
                 type="text"
@@ -136,7 +136,7 @@ function VotingPanel({ state }) {
             )}
 
             {candidateDetails.candidateNames.length > 0 &&
-              !votingTimeExpired && (
+               (
                 <div
                   className={`candidate-list-container ${
                     showInput ? "hide-fetch-candidates" : ""
@@ -167,7 +167,7 @@ function VotingPanel({ state }) {
                 </div>
               )}
 
-            {!votingTimeExpired && submitVote && (
+            {submitVote && (
               <div>
                 <button className="ob" onClick={recordVote}>
                   Submit Vote
