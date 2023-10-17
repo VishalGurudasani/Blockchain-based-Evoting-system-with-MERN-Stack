@@ -191,4 +191,32 @@ contract EVoting {
 
         return counts;
     }
+//     function resetAllVoterVoteStatus(string memory _city) public {
+//     Ballot storage ballot = cityToBallot[_city];
+//     require(!ballot.isOpen, "Election is still open, cannot reset vote statuses");
+    
+//     // Loop through all voter IDs and reset their vote status
+//     uint256 candidateCount = ballot.candidateCount;
+//     for (uint256 i = 0; i < candidateCount; i++) {
+//         string memory voterId = ballot.candidates[i].voterId;
+//         if (bytes(voterId).length > 0) {
+//             ballot.hasVotedByVoterID[voterId] = false;
+//         }
+//     }
+    
+//     // After resetting all voter vote statuses, you may want to clear the association of voter IDs with the city
+//     clearVoterCityAssociation(_city);
+// }
+
+// function clearVoterCityAssociation(string memory _city) internal {
+//     // Loop through all voter IDs and clear their association with the city
+//     uint256 candidateCount = cityToBallot[_city].candidateCount;
+//     for (uint256 i = 0; i < candidateCount; i++) {
+//         string memory voterId = cityToBallot[_city].candidates[i].voterId;
+//         if (bytes(voterId).length > 0) {
+//             voterToCity[voterId] = "";
+//         }
+//     }
+// }
+
 }
