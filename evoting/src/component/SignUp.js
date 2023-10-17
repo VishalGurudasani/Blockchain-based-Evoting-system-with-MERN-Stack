@@ -1,5 +1,6 @@
 import {React, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import "../CSS/signup.css";
 
 const SignUp = () => {
     let navigate = useNavigate();
@@ -13,7 +14,7 @@ const SignUp = () => {
     
     const { name, email, password, voterid, adharno } = credentials;
 
-    // Assuming you have an API route for user registration
+
     const response = await fetch('http://localhost:5000/api/auth/createuser', {
       method: 'POST',
       headers: {
@@ -30,13 +31,13 @@ const SignUp = () => {
 
       if (success) {
          
-        navigate(`/verify/${_id}`); // Navigate with ObjectId
+        navigate(`/verify/${_id}`); 
       } else {
-        // Handle registration failure
+        
         console.error('Registration failed');
       }
     } else {
-      // Handle registration failure
+      
       console.error('Registration failed');
     }
   };
@@ -46,7 +47,7 @@ const SignUp = () => {
   }
   return (
     <div>
-        <div className="container my-3">
+        <div className="register">
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
@@ -122,15 +123,16 @@ const SignUp = () => {
             onChange={onChange}
           />
         </div>
-
-        <button type="submit" className="btn btn-primary">
+<div className="spacesignup">
+        <button type="submit" className="ob">
           Submit
         </button>
+        <p id='sup'>
+         <span onClick={() => navigate('/login')}>Already have an account?Login</span>
+      </p></div>
       </form>
 
-      <p>
-        Already have an account? <span onClick={() => navigate('/login')}>Login</span>
-      </p>
+      
       
     </div>
     </div>

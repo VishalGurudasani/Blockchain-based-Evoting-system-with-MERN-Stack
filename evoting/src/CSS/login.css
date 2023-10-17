@@ -1,7 +1,17 @@
-body {
+* {
     margin: 0;
     padding: 0;
-    background-color: rgb(116, 186, 227);
+    box-sizing: border-box;
+  }
+  
+
+body {
+    
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(210deg, rgb(116, 186, 227),#02010a 90% );
     
 }
 .a{

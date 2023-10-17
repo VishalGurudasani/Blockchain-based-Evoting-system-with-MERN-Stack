@@ -1,0 +1,26 @@
+.register{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    background-color: rgb(31, 30, 30);
+    color: aliceblue;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    margin: 30px auto 0 auto;  
+    animation: slide-in 1s ease-in-out; 
+}
+.spacesignup{
+    display: flex;
+    justify-content: space-between;
+}
+
+#sup{
+    font-size: 12px;
+    margin-top: 20px;
+    }
+
+    #sup:hover{
+        cursor: pointer;
+        color: green;
+    }
