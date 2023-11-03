@@ -25,7 +25,7 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     try {
-      // Send a request to the backend to send OTP to the provided email
+      
       const response = await fetch('http://localhost:5000/api/otp/send-otp', {
         method: 'POST',
         headers: {
@@ -51,7 +51,7 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     try {
-      // Send a request to the backend to reset the password using OTP
+      
       const response = await fetch('http://localhost:5000/api/otp/reset-password', {
         method: 'POST',
         headers: {

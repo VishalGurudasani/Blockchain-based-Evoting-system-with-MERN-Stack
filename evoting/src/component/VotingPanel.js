@@ -65,7 +65,7 @@ function VotingPanel({ state }) {
         const City = city;
         const Index = selectedCandidate;
         const Transaction = await contract.vote(voterId, City, Index);
-        
+
         await Transaction.wait();
         alert("Your vote has been submitted");
       } else {
@@ -77,6 +77,7 @@ function VotingPanel({ state }) {
       console.error("Error while recording vote:", error);
     }
   };
+
   useEffect(() => {
     const VotingTime = setInterval(() => {
       if (timeInterval > 0) {
@@ -92,7 +93,7 @@ function VotingPanel({ state }) {
   useEffect(() => {
     if (timeInterval === 0) {
       setExpire(true);
-      
+
       navigate("/");
     }
   }, [timeInterval]);
@@ -106,7 +107,6 @@ function VotingPanel({ state }) {
       .toString()
       .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
   }
-  
 
   return (
     <div>
@@ -125,7 +125,7 @@ function VotingPanel({ state }) {
                 Fetch Candidates
               </button>
             )}
-            {showInput && (
+            {timeInterval > 0 && showInput && (
               <input
                 className="inputfield"
                 type="text"
@@ -135,37 +135,36 @@ function VotingPanel({ state }) {
               />
             )}
 
-            {candidateDetails.candidateNames.length > 0 &&
-               (
-                <div
-                  className={`candidate-list-container ${
-                    showInput ? "hide-fetch-candidates" : ""
-                  }`}
-                >
-                  {candidateDetails.candidateNames.map((name, index) => (
-                    <div key={index} className="candidate-item">
-                      <div className="candidate-image">
-                        <img
-                          src="https://www.clipartmax.com/png/middle/479-4799725_when-one-person-addresses-another-person-it-should-icon-admin.png"
-                          alt="Default Candidate"
-                        />
-                      </div>
-                      <div className="candidate-info">
-                        <label>
-                          <input
-                            type="radio"
-                            name="candidateRadio"
-                            value={index}
-                            checked={selectedCandidate === index}
-                            onChange={() => setSelectedCandidate(index)}
-                          />
-                          {name} ({candidateDetails.candidateParties[index]})
-                        </label>
-                      </div>
+            {candidateDetails.candidateNames.length > 0 && (
+              <div
+                className={`candidate-list-container ${
+                  showInput ? "hide-fetch-candidates" : ""
+                }`}
+              >
+                {candidateDetails.candidateNames.map((name, index) => (
+                  <div key={index} className="candidate-item">
+                    <div className="candidate-image">
+                      <img
+                        src="https://www.clipartmax.com/png/middle/479-4799725_when-one-person-addresses-another-person-it-should-icon-admin.png"
+                        alt="Default Candidate"
+                      />
                     </div>
-                  ))}
-                </div>
-              )}
+                    <div className="candidate-info">
+                      <label>
+                        <input
+                          type="radio"
+                          name="candidateRadio"
+                          value={index}
+                          checked={selectedCandidate === index}
+                          onChange={() => setSelectedCandidate(index)}
+                        />
+                        {name} ({candidateDetails.candidateParties[index]})
+                      </label>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {submitVote && (
               <div>

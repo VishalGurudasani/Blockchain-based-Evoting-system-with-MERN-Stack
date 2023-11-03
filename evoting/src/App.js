@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     const connectWallet = async () => {
-      const contractAddress = "0x1479b27aB8707df68e4083371b317F3372A50Bca";
+      const contractAddress = "0xDc04682ba8adcfFFbE935854f1476b96fBC6dfA3";
       const contractAbi = abi.abi;
       try {
         const { ethereum } = window;
@@ -73,7 +73,7 @@ function App() {
           <Route path="/reset-password" element={<ForgotPassword />} />
           <Route path="/verify-otp" element={<Lotp />} />
           <Route path="/admin" element={<AdminL />} />
-          <Route path="/adminpanel" element={<AdminPanel state={state} />} />
+          <Route path="/adminpanel" element={<AdminPanel state={state}/>} />
           <Route path="/voting" element={<VotingPanel state={state} />} />
           <Route path="/getVoterId" element={<Test />} />
           

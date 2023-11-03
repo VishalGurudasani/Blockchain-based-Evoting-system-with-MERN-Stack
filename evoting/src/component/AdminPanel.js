@@ -23,16 +23,17 @@ const AdminPanel = ({ state }) => {
     winnerName: "",
     winnerParty: "",
   });
+  const [bDelete , setDelete] = useState();
   const { contract } = state;
   const createBallot = async (event) => {
     try {
       console.log("create ballot");
       event.preventDefault();
       const { contract } = state;
-      //    await contract.methods.createBallot().send({from:state})
+     
       const City = document.querySelector("#city").value;
       console.log("City", City);
-      //     let city=document.getElementById('#city').val()
+
       const transaction = await contract.createBallot(City);
       await transaction.wait();
       console.log("ballot created");
@@ -46,7 +47,7 @@ const AdminPanel = ({ state }) => {
       event.preventDefault();
       console.log("adding Candidate");
 
-      const City = document.querySelector("#city").value;
+      const City = document.querySelector("#Candidatecity").value;
       const Name = document.querySelector("#name").value;
       const Party = document.querySelector("#party").value;
       const transaction = await contract.addCandidate(City, Name, Party);
@@ -120,6 +121,14 @@ const AdminPanel = ({ state }) => {
     console.log("ballot closed");
   };
 
+  const DeleteBallot = async()=>{
+    const Details=await contract.deleteBallot(bDelete);
+    await Details.wait();
+    setDelete(Details);
+    console.log(Details);
+    console.log("ballot Deleted");
+  }
+
   return (
     <div className="admin">
       <h1 className="text-center">Admin Panel</h1>
@@ -155,7 +164,7 @@ const AdminPanel = ({ state }) => {
         <button className="ob" onClick={addCandidate}>
           Add Candidate
         </button>
-        <input type="text" placeholder="city" id="city" />
+        <input type="text" placeholder="city" id="Candidatecity" />
         <input type="text" placeholder="Candidate Name" id="name" />
         <input type="text" placeholder="Candidate Party" id="party" />
         <hr />
@@ -337,6 +346,15 @@ const AdminPanel = ({ state }) => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <button className="ob" onClick={DeleteBallot}>Delete Ballot</button>
+        <input
+          type="text"
+          placeholder="city"
+          value={bDelete}
+          onChange={(e) => setDelete(e.target.value)}
+        />
       </div>
     </div>
   );

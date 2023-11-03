@@ -14,15 +14,11 @@ contract EVoting {
         bool isOpen;
         uint256 candidateCount;
         mapping(uint256 => Candidate) candidates;
-        mapping(string => bool) hasVotedByVoterID; 
-        
+        mapping(string => bool) hasVotedByVoterID;
     }
 
-
-
-    mapping(string => Ballot) public cityToBallot; 
-    mapping(string => string) public voterToCity; 
-   
+    mapping(string => Ballot) public cityToBallot;
+    mapping(string => string) public voterToCity;
 
     constructor() {}
 
@@ -54,17 +50,31 @@ contract EVoting {
         ballot.candidateCount++;
     }
 
-     function vote(string memory _voterId, string memory _city, uint256 _candidateIndex) public {
+    function vote(
+        string memory _voterId,
+        string memory _city,
+        uint256 _candidateIndex
+    ) public {
         Ballot storage ballot = cityToBallot[_city];
-        require(_candidateIndex < ballot.candidateCount, "Invalid candidate index");
+        require(
+            _candidateIndex < ballot.candidateCount,
+            "Invalid candidate index"
+        );
         require(ballot.isOpen, "Ballot is closed");
-        require(!ballot.hasVotedByVoterID[_voterId], "You have already voted with this voter ID");
-        require(bytes(voterToCity[_voterId]).length == 0 || keccak256(bytes(voterToCity[_voterId])) == keccak256(bytes(_city)), "You have already voted in a different city");
+        require(
+            !ballot.hasVotedByVoterID[_voterId],
+            "You have already voted with this voter ID"
+        );
+        require(
+            bytes(voterToCity[_voterId]).length == 0 ||
+                keccak256(bytes(voterToCity[_voterId])) ==
+                keccak256(bytes(_city)),
+            "You have already voted in a different city"
+        );
 
         ballot.candidates[_candidateIndex].voteCount++;
         ballot.hasVotedByVoterID[_voterId] = true;
-        voterToCity[_voterId] = _city; 
-        
+        voterToCity[_voterId] = _city;
     }
 
     function getResult(string memory _city)
@@ -160,7 +170,6 @@ contract EVoting {
         );
         require(ballot.isOpen, "Ballot is closed");
 
-        
         if (_candidateIndex < ballot.candidateCount - 1) {
             ballot.candidates[_candidateIndex] = ballot.candidates[
                 ballot.candidateCount - 1
@@ -176,47 +185,25 @@ contract EVoting {
         ballot.isOpen = false;
     }
 
-    function getVoteCounts(string memory _city)
-        public
-        view
-        returns (uint256[] memory voteCounts)
-    {
+    function deleteBallot(string memory _city) public {
         Ballot storage ballot = cityToBallot[_city];
-        uint256 candidateCount = ballot.candidateCount;
-        uint256[] memory counts = new uint256[](candidateCount);
+        require(
+            msg.sender == ballot.admin,
+            "Only the admin can delete the ballot"
+        );
+        require(!ballot.isOpen, "Ballot must be closed before deleting");
 
-        for (uint256 i = 0; i < candidateCount; i++) {
-            counts[i] = ballot.candidates[i].voteCount;
+        
+        ballot.city = "";
+        ballot.admin = address(0);
+        ballot.isOpen = false;
+        ballot.candidateCount = 0;
+
+        
+        for (uint256 i = 0; i < ballot.candidateCount; i++) {
+            delete ballot.candidates[i];
         }
-
-        return counts;
+        
+        delete cityToBallot[_city];
     }
-//     function resetAllVoterVoteStatus(string memory _city) public {
-//     Ballot storage ballot = cityToBallot[_city];
-//     require(!ballot.isOpen, "Election is still open, cannot reset vote statuses");
-    
-//     // Loop through all voter IDs and reset their vote status
-//     uint256 candidateCount = ballot.candidateCount;
-//     for (uint256 i = 0; i < candidateCount; i++) {
-//         string memory voterId = ballot.candidates[i].voterId;
-//         if (bytes(voterId).length > 0) {
-//             ballot.hasVotedByVoterID[voterId] = false;
-//         }
-//     }
-    
-//     // After resetting all voter vote statuses, you may want to clear the association of voter IDs with the city
-//     clearVoterCityAssociation(_city);
-// }
-
-// function clearVoterCityAssociation(string memory _city) internal {
-//     // Loop through all voter IDs and clear their association with the city
-//     uint256 candidateCount = cityToBallot[_city].candidateCount;
-//     for (uint256 i = 0; i < candidateCount; i++) {
-//         string memory voterId = cityToBallot[_city].candidates[i].voterId;
-//         if (bytes(voterId).length > 0) {
-//             voterToCity[voterId] = "";
-//         }
-//     }
-// }
-
 }
