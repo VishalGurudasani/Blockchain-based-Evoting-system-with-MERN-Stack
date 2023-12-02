@@ -1,13 +1,89 @@
-.slide{
-    height: 91vh;
-    max-width: 15vw;
-    margin-left: 10px;
-    border-right: 2px solid black;
-    padding-top: 50px;
-    
+/* Test.css
+.box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: auto;
+    max-width: 150vb;
+    height: 80vh;
+    background-color: #fff;
+    margin-top: 30px;
+    position: relative;
+  }
+  
+  .slide {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 20px;
+  }
+  
+  .s1 {
+    cursor: pointer;
+  }
+  
+  .s1.active {
+    font-weight: bold;
+  }
+  
+  
+  .v-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 1px; 
+    background-color: red; 
+    margin: 0 130vb; 
+  }
+  
+  
+  
+   */
+
+
+.containerd {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 80vh;
+  max-width: max-content;
+  margin: 0 auto;
+  margin-top: 50px;
+  background-color: black;
+  color: whitesmoke;
 }
 
-.s1{
-   color: black;
-   
+.menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-right: 1px solid #ccc;
 }
+
+.menuItem {
+  cursor: pointer;
+  padding: 10px 0;
+  transition: background-color 0.3s ease;
+}
+
+.menuItem:hover {
+  background-color: #ddd;
+}
+
+.menuItem.active {
+  background-color: #ccc;
+}
+
+.content {
+  flex: 2;
+  padding: 20px;
+}
+
+.info {
+  font-size: 18px;
+}
+

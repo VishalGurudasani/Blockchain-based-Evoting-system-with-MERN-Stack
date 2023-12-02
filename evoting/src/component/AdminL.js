@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../CSS/admin.css";
 import { useCredentials } from "../Context/CredentialContext";
-const AdminL = () => {
+const AdminL = (props) => {
   let navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -24,8 +24,9 @@ const AdminL = () => {
     if (credentials.email === email && json.success) {
       localStorage.setItem("token", json.authtoken);
       navigate("/adminpanel");
+      props.Showalert("Welcome to Admin Panel","success")
     } else {
-      alert("Invalid credentials", "danger");
+      props.Showalert("Invalid credentials", "danger");
     }
   };
 

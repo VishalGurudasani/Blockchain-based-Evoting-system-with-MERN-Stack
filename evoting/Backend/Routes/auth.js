@@ -8,6 +8,7 @@ var jwt = require("jsonwebtoken");
 var fetchuser = require("../Middleware/fetchuser");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
+require("dotenv").config({path:"./scripts/.env"});
 
 const JWT_SECRET = "evoting#";
 
@@ -53,23 +54,23 @@ router.post(
         adharno: req.body.adharno,
       });
 
-      const verificationLink = `http://localhost:5000/api/auth/verify/?id=${user._id.toString()}`;
-      const emailContent = `Click <a href="${verificationLink}">here</a> to verify your email.`;
+      // const verificationLink = `http://localhost:5000/api/auth/verify/?id=${user._id.toString()}`;
+      // const emailContent = `Click <a href="${verificationLink}">here</a> to verify your email.`;
 
-      const mailOptions = {
-        from: "flavio.hegmann@ethereal.email",
-        to: user.email,
-        subject: "Email Verification",
-        html: emailContent,
-      };
+      // const mailOptions = {
+      //   from:"vishalgurudasani0@gmail.com",
+      //   to: req.body.email,
+      //   subject: "Email Verification",
+      //   html: emailContent,
+      // };
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log("Error sending email:", error);
-        } else {
-          console.log("Email sent:", info.response);
-        }
-      });
+      // transporter.sendMail(mailOptions, (error, info) => {
+      //   if (error) {
+      //     console.log("Error sending email:", error);
+      //   } else {
+      //     console.log("Email sent:", info.response);
+      //   }
+      // });
 
       const data = {
         user: {

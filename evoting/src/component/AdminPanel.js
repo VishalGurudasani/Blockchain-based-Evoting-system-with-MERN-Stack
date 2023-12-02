@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
 
-const AdminPanel = ({ state }) => {
+const AdminPanel = ( {state}) => {
   const [bDetails, setBDetails] = useState({
     city: "",
     admin: "",
@@ -23,20 +23,25 @@ const AdminPanel = ({ state }) => {
     winnerName: "",
     winnerParty: "",
   });
-  const [bDelete , setDelete] = useState();
+  const [bDelete, setDelete] = useState();
+  const [selectedOption, setSelectedOption] = useState(null);
   const { contract } = state;
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+  };
   const createBallot = async (event) => {
     try {
-      console.log("create ballot");
+      alert("creating ballot");
       event.preventDefault();
       const { contract } = state;
-     
+
       const City = document.querySelector("#city").value;
       console.log("City", City);
 
       const transaction = await contract.createBallot(City);
       await transaction.wait();
-      console.log("ballot created");
+      alert("ballot created");
     } catch (error) {
       console.log("ballot not created because owner denied the transaction");
     }
@@ -45,14 +50,14 @@ const AdminPanel = ({ state }) => {
   const addCandidate = async (event) => {
     try {
       event.preventDefault();
-      console.log("adding Candidate");
+      alert("adding Candidate");
 
       const City = document.querySelector("#Candidatecity").value;
       const Name = document.querySelector("#name").value;
       const Party = document.querySelector("#party").value;
       const transaction = await contract.addCandidate(City, Name, Party);
       await transaction.wait();
-      console.log("Candidate Added");
+      alert("Candidate Added");
     } catch (error) {
       console.log(error);
     }
@@ -111,6 +116,7 @@ const AdminPanel = ({ state }) => {
     });
 
     console.log(Details);
+    
   };
 
   const closeballot = async () => {
@@ -121,55 +127,92 @@ const AdminPanel = ({ state }) => {
     console.log("ballot closed");
   };
 
-  const DeleteBallot = async()=>{
-    const Details=await contract.deleteBallot(bDelete);
+  const DeleteBallot = async () => {
+    const Details = await contract.deleteBallot(bDelete);
     await Details.wait();
     setDelete(Details);
     console.log(Details);
-    console.log("ballot Deleted");
-  }
+    alert("ballot Deleted");
+  };
 
   return (
     <div className="admin">
-      <h1 className="text-center">Admin Panel</h1>
+      <div className="left-section">
+        <h2>Options</h2>
+        <ul>
+          <li onClick={() => handleOptionClick("Ballot")}>Ballot</li>
+          <li onClick={() => handleOptionClick("Candidate")}>Candidate</li>
+          <li onClick={() => handleOptionClick("Result section")}>Result</li>
+        </ul>
+      </div>
       <br />
+      <div className="right-section">
+        {selectedOption === "Ballot" && (
+          <div>
+            <div>
+              <button className="ob" onClick={createBallot}>
+                Create Ballot
+              </button>
+              <input type="text" placeholder="City" id="city" />
+            </div>
+            <div>
+              <button
+                type="button"
+                className="ob"
+                data-bs-toggle="modal"
+                data-bs-target="#BallotDetailModal"
+                onClick={ballotDetails}
+              >
+                Ballot Details
+              </button>
+              <input
+                type="text"
+                placeholder="enter city to check the ballot"
+                value={ballotCity}
+                onChange={(event) => {
+                  setBallotCity(event.target.value);
+                }}
+              />
+            </div>
+          </div>
+        )}
+      
+      
+      
+        {selectedOption === "Candidate" &&(
+        <div>
       <div>
-        <button className="ob" onClick={createBallot}>
-          Create Ballot
-        </button>
-        <input type="text" placeholder="City" id="city" />
-      </div>
-      <div>
-        <button
-          type="button"
-          className="ob"
-          data-bs-toggle="modal"
-          data-bs-target="#BallotDetailModal"
-          onClick={ballotDetails}
-        >
-          Ballot Details
-        </button>
-        <input
-          type="text"
-          placeholder="enter city to check the ballot"
-          value={ballotCity}
-          onChange={(event) => {
-            setBallotCity(event.target.value);
-          }}
-        />
-      </div>
-      <hr />
-      <div>
-        <h2 className="text-center">Add Candidate</h2>
+        
         <button className="ob" onClick={addCandidate}>
           Add Candidate
         </button>
         <input type="text" placeholder="city" id="Candidatecity" />
         <input type="text" placeholder="Candidate Name" id="name" />
         <input type="text" placeholder="Candidate Party" id="party" />
-        <hr />
-      </div>
-
+        
+        <button
+          type="button"
+          className="ob"
+          data-bs-toggle="modal"
+          data-bs-target="#CandidateDetailModal"
+          onClick={getCandidateDetails}
+        >
+          Candidate Details
+        </button>
+        <input
+          type="text"
+          placeholder="enter candidate city"
+          value={candidateCity}
+          onChange={(e) => setCandidateCity(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="enter candiadte index"
+          value={candidateIndex}
+          onChange={(e) => setCandidateIndex(e.target.value)}
+        />
+      </div></div>)}
+      
       <div
         className="modal fade "
         id="BallotDetailModal"
@@ -217,27 +260,7 @@ const AdminPanel = ({ state }) => {
       </div>
 
       <div>
-        <button
-          type="button"
-          className="ob"
-          data-bs-toggle="modal"
-          data-bs-target="#CandidateDetailModal"
-          onClick={getCandidateDetails}
-        >
-          Candidate Details
-        </button>
-        <input
-          type="text"
-          placeholder="enter candidate city"
-          value={candidateCity}
-          onChange={(e) => setCandidateCity(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="enter candiadte index"
-          value={candidateIndex}
-          onChange={(e) => setCandidateIndex(e.target.value)}
-        />
+        
         <div
           className="modal fade"
           id="CandidateDetailModal"
@@ -280,7 +303,10 @@ const AdminPanel = ({ state }) => {
           </div>
         </div>
       </div>
-      <hr />
+      
+      
+        {selectedOption === "Result section" &&(
+          <div>
       <div>
         <button className="ob" onClick={closeballot}>
           Close Ballot
@@ -292,7 +318,7 @@ const AdminPanel = ({ state }) => {
           onChange={(e) => setClose(e.target.value)}
         />
       </div>
-      <hr />
+      
       <div>
         <button
           type="button"
@@ -348,7 +374,9 @@ const AdminPanel = ({ state }) => {
         </div>
       </div>
       <div>
-        <button className="ob" onClick={DeleteBallot}>Delete Ballot</button>
+        <button className="ob" onClick={DeleteBallot}>
+          Delete Ballot
+        </button>
         <input
           type="text"
           placeholder="city"
@@ -356,7 +384,8 @@ const AdminPanel = ({ state }) => {
           onChange={(e) => setDelete(e.target.value)}
         />
       </div>
-    </div>
+      
+    </div>)}</div></div>
   );
 };
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../CSS/login.css"
 import { useCredentials } from "../Context/CredentialContext";
 
-const Login = () => {
+const Login = (props) => {
   let navigate = useNavigate();
 
   const { credentials, setCredentials } = useCredentials();
@@ -33,7 +33,7 @@ const Login = () => {
       localStorage.setItem("token", json.authtoken);
       navigate("/verify-otp");
     } else {
-      alert("invalid credentials", "danger");
+      props.Showalert("invalid credentials", "danger");
     }
 
 
@@ -46,9 +46,9 @@ const Login = () => {
     });
     const jsonOTP = await responseOTP.json();
     if (jsonOTP.success) {
-      alert("OTP sent successfully");
+      props.Showalert("OTP sent successfully","success");
     } else {
-      alert("Error sending OTP");
+      props.Showalert("Error sending OTP","warning");
     }
   };
 

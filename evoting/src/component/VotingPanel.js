@@ -34,13 +34,22 @@ function VotingPanel({ state }) {
     try {
       const City = city;
       const details = await contract.getCandidatesInCity(City);
+      const BallotDetails = await contract.getBallotDetails(City);
+      if (BallotDetails.isOpen === false) {
+        alert("Ballot is closed you can't vote now !");
+        localStorage.removeItem("token");
+        navigate("/login");
+        window.location.reload();
+      }
       console.log(details);
-      setCandidateDetails({
-        candidateNames: details[0],
-        candidateParties: details[1],
-      });
-      setShowInput(false);
-      setSubmitVote(true);
+      if (BallotDetails.isOpen === true) {
+        setCandidateDetails({
+          candidateNames: details[0],
+          candidateParties: details[1],
+        });
+        setShowInput(false);
+        setSubmitVote(true);
+      }
     } catch (error) {
       console.error("Error while fetching candidates:", error);
     }
@@ -65,9 +74,12 @@ function VotingPanel({ state }) {
         const City = city;
         const Index = selectedCandidate;
         const Transaction = await contract.vote(voterId, City, Index);
-
-        await Transaction.wait();
         alert("Your vote has been submitted");
+        localStorage.removeItem("token");
+        navigate("/login");
+        window.location.reload();
+        await Transaction.wait();
+        
       } else {
         alert(
           "Please select a candidate before submitting your vote or check whether your voterid is correct ."

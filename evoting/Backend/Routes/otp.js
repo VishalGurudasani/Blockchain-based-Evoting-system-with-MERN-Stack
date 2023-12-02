@@ -5,6 +5,7 @@ const otpGenerator = require("otp-generator");
 const OTPModel = require("../Models/OTPM");
 const bcrypt = require("bcryptjs");
 const User = require("../Models/user");
+require("dotenv").config({path:"./scripts/.env"});
 
 router.post("/send-otp", async (req, res) => {
   const email = req.body.email;
@@ -41,8 +42,8 @@ router.post("/send-otp", async (req, res) => {
   await otpData.save();
 
   const mailOptions = {
-    from: "flavio.hegmann@ethereal.email",
-    to: email,
+    from: "vishalgurudasani0@gmail.com",
+    to: user.email,
     subject: subject,
     text: `Your OTP is: ${generatedOtp}`,
   };
@@ -66,23 +67,26 @@ router.post("/verify-otp", async (req, res) => {
   try {
     const otpData = await OTPModel.findOne({ email });
 
+    
+
+
     if (!otpData) {
       return res
         .status(400)
         .json({ success: false, message: "No OTP found for this email" });
     }
-
+    
     // Verify the entered OTP and check if it's still valid
     if (otpData.otp !== otp || otpData.expiration < new Date()) {
-      await OTPModel.deleteOne({ email });
+      await OTPModel.deleteOne({ _id: otpData._id });
       return res
         .status(400)
-        .json({ success: false, message: "Invalid OTP or expired OTP" });
+        .json({ success: false, message: "Invalid OTP or expired OTP"  });
     }
 
-    await OTPModel.deleteOne({ email });
+    await OTPModel.deleteOne({_id: otpData._id });
 
-    res.json({ success: true, message: "OTP verification successful" });
+    res.json({ success: true, message: "OTP verification successful"  });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");

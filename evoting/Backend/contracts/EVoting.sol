@@ -77,7 +77,9 @@ contract EVoting {
         voterToCity[_voterId] = _city;
     }
 
-    function getResult(string memory _city)
+    function getResult(
+        string memory _city
+    )
         public
         view
         returns (string memory winnerName, string memory winnerParty)
@@ -101,7 +103,9 @@ contract EVoting {
         );
     }
 
-    function getCandidatesInCity(string memory _city)
+    function getCandidatesInCity(
+        string memory _city
+    )
         public
         view
         returns (
@@ -122,7 +126,9 @@ contract EVoting {
         return (names, parties);
     }
 
-    function getBallotDetails(string memory _city)
+    function getBallotDetails(
+        string memory _city
+    )
         public
         view
         returns (
@@ -141,14 +147,13 @@ contract EVoting {
         );
     }
 
-    function getCandidateDetails(string memory _city, uint256 _candidateIndex)
+    function getCandidateDetails(
+        string memory _city,
+        uint256 _candidateIndex
+    )
         public
         view
-        returns (
-            string memory name,
-            string memory party,
-            uint256 voteCount
-        )
+        returns (string memory name, string memory party, uint256 voteCount)
     {
         Ballot storage ballot = cityToBallot[_city];
         require(
@@ -160,9 +165,10 @@ contract EVoting {
         return (candidate.name, candidate.party, candidate.voteCount);
     }
 
-    function deleteCandidate(string memory _city, uint256 _candidateIndex)
-        public
-    {
+    function deleteCandidate(
+        string memory _city,
+        uint256 _candidateIndex
+    ) public {
         Ballot storage ballot = cityToBallot[_city];
         require(
             _candidateIndex < ballot.candidateCount,
@@ -193,17 +199,15 @@ contract EVoting {
         );
         require(!ballot.isOpen, "Ballot must be closed before deleting");
 
-        
         ballot.city = "";
         ballot.admin = address(0);
         ballot.isOpen = false;
         ballot.candidateCount = 0;
 
-        
         for (uint256 i = 0; i < ballot.candidateCount; i++) {
             delete ballot.candidates[i];
         }
-        
+
         delete cityToBallot[_city];
     }
 }

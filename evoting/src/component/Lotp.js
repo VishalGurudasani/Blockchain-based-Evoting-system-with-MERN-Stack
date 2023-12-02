@@ -1,14 +1,15 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import "../CSS/otp.css";
 import { useCredentials } from "../Context/CredentialContext";
 
-const Lotp = () => {
+const Lotp = (props) => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState(["", "", "", ""]);
   const { credentials } = useCredentials();
- 
- 
+  const [unlockAnimation, setUnlockAnimation] = useState(false);
+
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
 
   const handleSubmit = async (e) => {
@@ -20,16 +21,24 @@ const Lotp = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({email:credentials.email, otp: otpValue }),
+      body: JSON.stringify({ email: credentials.email, otp: otpValue }),
     });
     console.log(response);
-     console.log(credentials.email);
+    console.log(credentials.email);
     const json = await response.json();
-    console.log(json)
+    console.log(json);
     if (json.success) {
-      navigate("/");
+      setUnlockAnimation(true);
+     
+      props.Showalert("login successfull", "success");
+     
+      setTimeout(() => {
+        navigate("/")
+      },1000);
+      
+      
     } else {
-      alert("Invalid OTP");
+      props.Showalert("Invalid OTP", "danger");
     }
   };
 
@@ -37,22 +46,42 @@ const Lotp = () => {
     const newOtp = [...otp];
     newOtp[index] = e.target.value;
     setOtp(newOtp);
-    
 
     if (index < inputRefs.length - 1 && e.target.value !== "") {
       inputRefs[index + 1].current.focus();
     }
-
   };
 
   const Backspace = (e, index) => {
     if (e.key === "Backspace" && index > 0 && otp[index] === "") {
       inputRefs[index - 1].current.focus();
     }
+    if (e.key === "Backspace" && index > 0 && otp[index] !== "") {
+      inputRefs[index + 1].current.focus();
+    }
   };
+
+  useEffect(() => {
+    if (unlockAnimation) {
+      
+      const animationTimeout = setTimeout(() => {
+        setUnlockAnimation(false);
+      }, 1000);
+      return () => clearTimeout(animationTimeout);
+    }
+  }, [unlockAnimation]);
 
   return (
     <div>
+      <div className="lock-container">
+        <div className={`${unlockAnimation ? "unlocked" : "locked"}`}>
+          <div className="lock">
+            <div className="body"></div>
+            <div className="arc"></div>
+            <div className="keyhole"></div>
+          </div>
+        </div>
+      </div>
       <div className="container">
         <form onSubmit={handleSubmit}>
           <label>Enter OTP:</label>

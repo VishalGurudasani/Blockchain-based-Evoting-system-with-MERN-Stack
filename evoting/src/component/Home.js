@@ -1,40 +1,52 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import "../CSS/Home.css"
-import b3 from "../b3.svg"
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../CSS/Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/admin');
-  }
-  const isLoggedIn = localStorage.getItem('token');
+    navigate("/admin");
+  };
+  const isLoggedIn = localStorage.getItem("token");
 
   return (
-    <div >
-      <img src={b3} alt="Background" />
+    <div>
       <div className="home">
-      
-      {isLoggedIn ? (
-        <>
-          <button className='ob' onClick={handleClick}>isAdmin</button>
-          <button className='ob' onClick={()=>{navigate('/voting')}}>Voter</button>
-        </>
-      ) : (
-        <>
         
-        <p>You need to be logged in to access this page.</p>
-        
-        </>
-      )}
-      
-      
+        {isLoggedIn ? (
+          <>
+          <div className="home-container  background-image ">
+            <div className="s">
+            <button className="btn btn-primary " onClick={handleClick}>
+              isAdmin
+            </button>
+            <button
+              className="btn btn-primary "
+              onClick={() => {
+                navigate("/voting");
+              }}
+            >
+              Voter
+            </button></div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="font">
+              <p className="text-shadow-drop-center  tracking-in-expand ">
+                Online Voting
+              </p>
+              <p className="text-shadow-drop-center  tracking-in-expand ">
+                Let's Vote !!!
+              </p>
+              <p className="text-shadow-drop-center  tracking-in-expand ">Login to Proceed</p>
+            </div>
+          </>
+        )}
       </div>
-      
-      
     </div>
   );
-}
+};
 
 export default Home;

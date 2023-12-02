@@ -40,14 +40,15 @@
 .vertical-lines {
   border-collapse: collapse;
   border: 1px solid yellow;
-  background-color: aqua;
+  background-color: darkblue;
 }
 
 .vertical-lines td {
   border-right: 1px solid yellow;
   border-left: 1px solid yellow;
   padding: 5px 10px; 
-  background-color: rgb(199, 141, 223);
+  background: linear-gradient(210deg ,blue,black);
+  color: white;
 }
 
 .vertical-lines tr:first-child td {
@@ -59,7 +60,7 @@
 }
 
 .modal-content{
-background-color: aquamarine;
+background:linear-gradient(30deg ,black,blue ); 
 }
 
 

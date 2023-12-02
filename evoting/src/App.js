@@ -14,7 +14,19 @@ import VotingPanel from "./component/VotingPanel";
 import Test from "./component/Test";
 import { ethers } from "ethers";
 import { CredentialsProvider } from "./Context/CredentialContext";
+import Alert from "./component/Alert"
 function App() {
+  const [alert,setAlert] = useState(null)
+
+  const Showalert = (message,type)=>{
+    setAlert({
+      msg: message,
+      type: type,
+    })
+    setTimeout(()=>{
+     setAlert(null); 
+    },1500)
+  }
   const [state, setState] = useState({
     provider: null,
     signer: null,
@@ -63,21 +75,23 @@ function App() {
     <div>
       <Router>
         <Navbar />
+        <Alert alert={alert}/>
         <CredentialsProvider>
-        <Routes>
-          
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/verify" element={<EmailVerification />} />
-          <Route path="/reset-password" element={<ForgotPassword />} />
-          <Route path="/verify-otp" element={<Lotp />} />
-          <Route path="/admin" element={<AdminL />} />
-          <Route path="/adminpanel" element={<AdminPanel state={state}/>} />
-          <Route path="/voting" element={<VotingPanel state={state} />} />
-          <Route path="/getVoterId" element={<Test />} />
-          
-        </Routes>
+          <Routes>
+            <Route path="/login" element={<Login Showalert={Showalert}/>} />
+            <Route path="/" element={<Home Showalert={Showalert}/>} />
+            <Route path="/signup" element={<SignUp Showalert={Showalert}/>} />
+            <Route path="/verify" element={<EmailVerification Showalert={Showalert}/>} />
+            <Route path="/reset-password" element={<ForgotPassword Showalert={Showalert}/>} />
+            <Route path="/verify-otp" element={<Lotp Showalert={Showalert}/>} />
+            <Route path="/admin" element={<AdminL Showalert={Showalert}/>} />
+            <Route
+              path="/adminpanel"
+              element={<AdminPanel state={state} Showalert={Showalert}/*Test*//>} 
+            />
+            <Route path="/voting" element={<VotingPanel state={state} Showalert={Showalert}/>}  />
+            <Route path="/getVoterId" element={<Test Showalert={Showalert}/>}  />
+          </Routes>
         </CredentialsProvider>
       </Router>
     </div>
